@@ -107,6 +107,49 @@ def chat(request: MessageRequest):
             detail=f"Something went wrong: {str(e)}"
         )
 
+@app.post("/chat/stream")
+def chat_stream(request: MessageRequest):
+    global conversation_history
+
+    if not request.message.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="Message cannot be empty"
+        )
+
+    # Add user message to history
+    conversation_history.append({
+        "role": "user",
+        "content": request.message
+    })
+
+    def generate():
+        
+        try:
+            logger.info("Starting stream call...")
+            
+            stream = client.chat.completions.create(
+                model="groq/compound-mini",
+                messages=[
+                    {"role": "system", "content": system_prompt}
+                ] + conversation_history,
+                max_tokens=1024,
+                stream=True
+            )
+            
+            logger.info(f"Stream object type: {type(stream)}")
+            logger.info(f"Stream object: {stream}")
+            
+            for chunk in stream:
+                logger.info(f"Got chunk: {chunk}")
+                if chunk.choices[0].delta.content:
+                    yield chunk.choices[0].delta.content
+
+        except Exception as e:
+            import traceback
+            logger.error(f"Full error: {traceback.format_exc()}")
+            yield f"Error: {str(e)}"        
+
 
 @app.post("/reset")
 def clear():

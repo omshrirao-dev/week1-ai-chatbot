@@ -170,5 +170,14 @@ CONCEPT OF FILE HANDELING
 
         os.path.exists(path) — checks if a file already exists. Returns True or False.
 
+Day 6 — Streaming responses.
+
+Right now your chatbot waits for the COMPLETE response from Groq before sending anything back. For a long response — user waits 3-5 seconds staring at nothing.
+
+Streaming = words appear one by one as they are generated. Like ChatGPT typing in real time.
+
+This is the difference between a toy and a real product.
+
+
 python -m uvicorn api:app --reload        
 
