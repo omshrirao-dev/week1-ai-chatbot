@@ -1,3 +1,7 @@
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-latest-green)
+![Groq](https://img.shields.io/badge/Groq-API-orange)
+
 # AI Chatbot API
 
 A production-quality AI chatbot built with FastAPI and Groq LLM API.
