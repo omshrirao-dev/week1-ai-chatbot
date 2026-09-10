@@ -120,5 +120,16 @@ Broke it 5 ways:
 Key insight: validation before try, unexpected failures inside try
 Tomorrow: Day 4 — Git + push to GitHub
 
+Day 4 — Done ✓
+Built: pushed week1-chatbot project to GitHub
+Learned: git init, git add, git commit, git push, git pull
+Fixed: push rejection error — always pull before push
+Key insight: .gitignore protects secrets from going public
+             pull before push when remote has changes
+GitHub: github.com/omshrirao-dev/week1-ai-chatbot
+Tomorrow: Day 5 — conversation memory + system prompt experiments# After every meaningful change
+git add .
+git commit -m "what you changed and why"
+git push
 
 
