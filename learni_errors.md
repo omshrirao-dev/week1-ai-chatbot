@@ -204,3 +204,145 @@ Port             → door number, 8000 is yours
 Restart rule     → always restart after .env changes
 
 ═══════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════
+DAY 4 ERROR LOG
+═══════════════════════════════════════════════════════
+
+ERROR 1 — Push rejected
+──────────────────────────────
+Error:    ! [rejected] main -> main (fetch first)
+          Updates were rejected because the remote 
+          contains work that you do not have locally
+When:     Day 4 — first time pushing to GitHub
+Why:      You made changes directly on GitHub website
+          (adding topics). Now GitHub had newer code
+          than your laptop. Git refused to overwrite it.
+How YOU handled it:
+          You read the error message fully.
+          You understood "remote has changes I don't have."
+          You ran git pull origin main to sync first.
+          Then pushed successfully.
+Lesson:   Always pull before push when remote has changes.
+          git pull → git push. Never skip pull.
+
+═══════════════════════════════════════════════════════
+DAY 5 ERRORS
+═══════════════════════════════════════════════════════
+
+ERROR 2 — System prompt syntax mess
+──────────────────────────────
+Error:    Red underlines everywhere in VS Code
+When:     Day 5 — writing custom system prompt
+Why:      You wrote system_prompt = "system_prompt = '..."
+          Double assignment. Mixed single and double quotes.
+          Multi-line string inside single quotes — impossible.
+How YOU handled it:
+          You spotted something was wrong immediately.
+          You pasted the code here and asked for help.
+          You learned triple quotes """ for multi-line strings.
+Lesson:   Multi-line strings always use triple quotes.
+          Never nest quotes of same type inside each other.
+
+───────────────────────────────────────────────────────
+
+ERROR 3 — Scope error on conversation history
+──────────────────────────────
+Error:    cannot access local variable 'conversation_history'
+          where it is not associated with a value
+When:     Day 5 — adding memory limit sliding window
+Why:      You assigned to conversation_history inside 
+          the function. Python treated it as a local 
+          variable. But it did not exist locally yet.
+          Crash when trying to read it before assigning.
+How YOU handled it:
+          You read the error — "cannot access local variable"
+          You understood it was a scope problem.
+          You added global conversation_history at the
+          top of the function.
+          Tested — memory limit worked perfectly.
+Lesson:   Read global variable = no keyword needed.
+          Assign global variable inside function = 
+          must declare global first. Always.
+
+───────────────────────────────────────────────────────
+
+ERROR 4 — /reset endpoint syntax errors
+──────────────────────────────
+Error:    IndentationError + invalid syntax
+When:     Day 5 — building /reset endpoint alone
+Why:      Multiple issues:
+          - conversation_history inside decorator
+          - print = {...} instead of return
+          - Mixed indentation (4 spaces vs 6 spaces)
+          - Empty lines between decorator and function
+          - comment inside function breaking indentation
+How YOU handled it:
+          THIS IS THE IMPORTANT ONE.
+          You built this completely alone.
+          Every attempt got closer to correct.
+          Attempt 1: wrong syntax inside decorator
+          Attempt 2: wrong assignment to print
+          Attempt 3: missing global keyword
+          Attempt 4: global keyword present but 
+                     indentation wrong
+          Attempt 5: comment breaking indentation
+          Attempt 6: typed it fresh — WORKED.
+          You never gave up. You kept trying.
+          You fixed it without me writing it for you.
+Lesson:   Decorator and function must have no empty
+          line between them.
+          Indentation must be consistent — 4 spaces.
+          When messy — delete and retype fresh.
+
+───────────────────────────────────────────────────────
+
+ERROR 5 — Reset deletes history permanently
+──────────────────────────────
+Error:    Not a crash — a product thinking gap
+When:     Day 5 — after /reset was working
+Why:      Reset cleared history with no backup.
+          Data lost forever on every reset.
+How YOU handled it:
+          THIS IS THE MOST IMPRESSIVE ONE.
+          You caught this yourself. I did not point it out.
+          You said "we should store history before deleting"
+          That is product thinking + engineering thinking
+          combined. You thought beyond just making it work.
+          You thought about what a real product needs.
+Fix:      Adding JSON file storage before clearing.
+Lesson:   Working code is not always complete code.
+          Always ask "what happens to the data?"
+          That question separates engineers from coders.
+
+═══════════════════════════════════════════════════════
+SPECIAL MENTION — WHAT YOU DID DIFFERENTLY
+═══════════════════════════════════════════════════════
+
+Day 4: You read the git rejection error fully and 
+       understood what it meant before asking.
+       Most beginners panic. You diagnosed.
+
+Day 5: You built /reset endpoint through 6 attempts
+       without giving up once. Each attempt was 
+       closer than the last. That persistence is 
+       the most important engineering skill.
+
+Day 5: You caught the data loss bug yourself.
+       Nobody pointed it out. Your product instinct
+       fired naturally. That instinct grows with 
+       every project you build.
+
+═══════════════════════════════════════════════════════
+RUNNING TOTAL — WEEK 1
+═══════════════════════════════════════════════════════
+
+Day 1: 4 errors
+Day 2: 2 errors  
+Day 3: 5 errors
+Day 4: 1 error
+Day 5: 4 errors (1 caught by you independently)
+
+Total: 16 errors — 16 lessons — 0 gives up
+
+═══════════════════════════════════════════════════════

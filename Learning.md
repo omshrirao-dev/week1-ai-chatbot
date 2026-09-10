@@ -107,29 +107,68 @@ Break 4 — what Pydantic does with wrong data type
 
 OVERALL
     
-    Day 3 — Done ✓
-Built: error handling + logging + validation + requirements.txt
-Learned: try/except, HTTPException, logging levels,
-         fail-fast, rollback, 400 vs 500 status codes
-Broke it 5 ways:
-  1. Empty key     → ValueError at startup
-  2. Wrong key     → 401 from Groq → 500 to user
-  3. Empty message → 400 validation error
-  4. Wrong type    → 422 Pydantic auto-catch
-  5. Missing .env  → ValueError at startup
-Key insight: validation before try, unexpected failures inside try
-Tomorrow: Day 4 — Git + push to GitHub
+Day 3 — Done ✓
+
+        Built: error handling + logging + validation + requirements.txt
+        Learned: try/except, HTTPException, logging levels,
+                fail-fast, rollback, 400 vs 500 status codes
+        Broke it 5 ways:
+        1. Empty key     → ValueError at startup
+        2. Wrong key     → 401 from Groq → 500 to user
+        3. Empty message → 400 validation error
+        4. Wrong type    → 422 Pydantic auto-catch
+        5. Missing .env  → ValueError at startup
+        Key insight: validation before try, unexpected failures inside try
+        Tomorrow: Day 4 — Git + push to GitHub
 
 Day 4 — Done ✓
-Built: pushed week1-chatbot project to GitHub
-Learned: git init, git add, git commit, git push, git pull
-Fixed: push rejection error — always pull before push
-Key insight: .gitignore protects secrets from going public
-             pull before push when remote has changes
-GitHub: github.com/omshrirao-dev/week1-ai-chatbot
-Tomorrow: Day 5 — conversation memory + system prompt experiments# After every meaningful change
-git add .
-git commit -m "what you changed and why"
-git push
 
+        Built: pushed week1-chatbot project to GitHub
+        Learned: git init, git add, git commit, git push, git pull
+        Fixed: push rejection error — always pull before push
+        Key insight: .gitignore protects secrets from going public
+                    pull before push when remote has changes
+        GitHub: github.com/omshrirao-dev/week1-ai-chatbot
+        Tomorrow: Day 5 — conversation memory + system prompt experiments# After every meaningful change
+        git add .
+        git commit -m "what you changed and why"
+        git push
+
+
+
+
+
+
+DAY-5 
+
+
+Day 5 — Done ✓
+        Built: system prompt engineering + memory limits + /reset endpoint
+        Learned: prompt engineering, sliding window memory,
+                Python scope, global keyword
+        Built alone: /reset endpoint — first solo feature
+        Key insight: AI behavior = system prompt instructions
+                    Assign global inside function = need global keyword
+                    Every behavior must be explicitly told to AI
+        Tomorrow: Day 6 — convert chatbot to streaming responses
+
+
+
+CONCEPT OF FILE HANDELING
+
+            What each new concept does:
+
+        os.makedirs(folder, exist_ok=True) — creates the folder. exist_ok=True means if folder already exists — do not crash, just continue.
+
+        os.listdir(folder) — lists all files in the folder. Returns a list of filenames.
+
+        f.startswith("chat_") and f.endswith(".json") — filters only your chat files, excludes index.json.
+
+        str(sequence_number).zfill(3) — converts number to 3-digit string with leading zeros. So 1 becomes "001", 12 becomes "012". This keeps files sorted correctly in the folder.
+
+        os.path.join(folder, filename) — safely combines folder path and filename. Works on Windows AND Mac/Linux without you worrying about / vs \.
+
+        os.path.exists(path) — checks if a file already exists. Returns True or False.
+
+python -m uvicorn api:app --reload        
 

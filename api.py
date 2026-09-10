@@ -1,9 +1,12 @@
 import os
 import logging
+import json
+from datetime import datetime
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from groq import Groq
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -55,7 +58,6 @@ class MessageResponse(BaseModel):
 @app.get("/")
 def home():
     return {"status": "AI Chatbot API is running"}
-
 
 @app.post("/chat", response_model=MessageResponse)
 def chat(request: MessageRequest):
@@ -109,12 +111,64 @@ def chat(request: MessageRequest):
 @app.post("/reset")
 def clear():
     global conversation_history
+
+    # Step 1 — Create folder if it does not exist
+    history_folder = "chat_histories"
+    os.makedirs(history_folder, exist_ok=True)
+
+    # Step 2 — Count existing files to get sequence number
+    existing_files = [
+        f for f in os.listdir(history_folder)
+        if f.startswith("chat_") and f.endswith(".json")
+        and f != "index.json"
+    ]
+    sequence_number = len(existing_files) + 1
+    sequence = str(sequence_number).zfill(3)  # 001, 002, 003
+
+    # Step 3 — Save history file if history exists
+    if conversation_history:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"chat_{sequence}_{timestamp}.json"
+        filepath = os.path.join(history_folder, filename)
+
+        with open(filepath, "w") as f:
+            json.dump(conversation_history, f, indent=2)
+
+        logger.info(f"History saved to {filepath}")
+
+        # Step 4 — Update index file
+        index_path = os.path.join(history_folder, "index.json")
+
+        # Read existing index or create empty one
+        if os.path.exists(index_path):
+            with open(index_path, "r") as f:
+                index = json.load(f)
+        else:
+            index = []
+
+        # Add new entry to index
+        index.append({
+            "sequence": sequence_number,
+            "filename": filename,
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "message_count": len(conversation_history)
+        })
+
+        # Save updated index
+        with open(index_path, "w") as f:
+            json.dump(index, f, indent=2)
+
+        logger.info(f"Index updated — session {sequence}")
+
+        # Clear history
+        conversation_history = []
+
+        return {
+            "message": f"Conversation reset. Session {sequence} saved.",
+            "filename": filename,
+            "messages_saved": len(index[-1].get('message_count', 0))
+        }
+
+    # If no history to save — just reset
     conversation_history = []
-    return {"message": "Conversation reset successfully"}
-      
-
-
-
-
-
-
+    return {"message": "Conversation reset. No history to save."}
