@@ -1,3 +1,9 @@
+## 🚀 Live Demo
+**API:** https://week1-ai-chatbot-1.onrender.com
+**Docs:** https://week1-ai-chatbot-1.onrender.com/docs
+
+Try it: POST /chat with {"message": "What skills do I need to become an AI engineer?"}
+
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-latest-green)
 ![Groq](https://img.shields.io/badge/Groq-API-orange)
